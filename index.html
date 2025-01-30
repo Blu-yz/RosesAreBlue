@@ -2,76 +2,85 @@
 <html>
 <head>
     <title>Valentine's Surprise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
         }
 
-        /* Permanent bottom-right photo */
+        /* Background photo */
         .static-photo {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 150px;
+            width: 200px;
             border: 2px solid #ff69b4;
             border-radius: 8px;
+            z-index: 0;
+            pointer-events: none; /* Allows clicks to pass through */
+            opacity: 0.9; /* Optional: makes it slightly transparent */
         }
 
-        /* Hidden photo that appears on Yes */
+        /* Centered response photo */
         .response-photo {
             display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 400px;
             border: 3px solid #ff1493;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            z-index: 2; /* Ensures it appears above the static photo */
+            z-index: 2;
         }
 
         #question {
             text-align: center;
-            font-size: 2em;
+            font-size: 1.5em;
             color: #ff1493;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         #buttons {
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         button {
-            padding: 15px 30px;
+            padding: 12px 25px;
             margin: 10px;
-            font-size: 1.2em;
+            font-size: 1em;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: transform 0.2s;
-        }
-
-        #yesBtn {
-            background-color: #32cd32;
-            color: white;
-        }
-
-        #noBtn {
-            background-color: #ff4444;
-            color: white;
             position: relative;
+        }
+
+        /* Mobile-friendly container */
+        .container {
+            max-width: 50vh;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         <div id="question">Will you be my valentine?</div>
         <div id="buttons">
             <button id="yesBtn" onclick="showResponse()">Yes</button>
@@ -79,11 +88,11 @@
         </div>
     </div>
 
-    <!-- Permanent photo (always visible) -->
-    <img class="static-photo" src="bottom_right.jpg" alt="Decorative Photo">
+    <!-- Background photo -->
+    <img class="static-photo" src="pop_out.jpg" alt="Decorative Photo">
     
     <!-- Hidden response photo -->
-    <img class="response-photo" id="responsePhoto" src="pop_out.jpg" alt="Celebration Photo">
+    <img class="response-photo" id="responsePhoto" src="bottom_right.jpg" alt="Celebration Photo">
 
     <script>
         function moveButton() {
@@ -99,7 +108,7 @@
             document.getElementById('responsePhoto').style.display = 'block';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
-            document.getElementById('question').innerHTML = "Yay! 💝<br>Look at the bottom right!";
+            document.getElementById('question').innerHTML = "Yay! 💝<br>See you on Feb 14!";
         }
 
         // Initialize No button position
