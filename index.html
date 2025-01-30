@@ -13,6 +13,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
+            overflow: hidden;
         }
 
         /* Background photo */
@@ -24,8 +25,9 @@
             border: 2px solid #ff69b4;
             border-radius: 8px;
             z-index: 0;
-            pointer-events: none; /* Allows clicks to pass through */
-            opacity: 0.9; /* Optional: makes it slightly transparent */
+            pointer-events: none;
+            opacity: 0.9;
+            transition: opacity 0.3s ease-in-out;
         }
 
         /* Centered response photo */
@@ -67,7 +69,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: transform 0.2s;
-            position: relative;
+            position: absolute;
         }
 
         /* Mobile-friendly container */
@@ -76,6 +78,20 @@
             margin: 0 auto;
             position: relative;
             z-index: 1;
+        }
+
+        /* Response text */
+        #responseText {
+            display: none;
+            text-align: center;
+            font-size: 1.8em;
+            color: #ff1493;
+            font-weight: bold;
+            position: fixed;
+            left: 50%;
+            top: 35%;
+            transform: translateX(-50%);
+            z-index: 3;
         }
     </style>
 </head>
@@ -89,16 +105,19 @@
     </div>
 
     <!-- Background photo -->
-    <img class="static-photo" src="pop_out.jpg" alt="Decorative Photo">
+    <img class="static-photo" id="staticPhoto" src="pop_out.jpg" alt="Decorative Photo">
     
+    <!-- Hidden response text -->
+    <div id="responseText">Yay ❤️<br>See you on Feb 14!</div>
+
     <!-- Hidden response photo -->
     <img class="response-photo" id="responsePhoto" src="bottom_right.jpg" alt="Celebration Photo">
 
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            const maxX = window.innerWidth / 2 - noBtn.offsetWidth - 10;
+            const maxY = window.innerHeight / 2 - noBtn.offsetHeight - 10;
             
             noBtn.style.left = Math.random() * maxX + 'px';
             noBtn.style.top = Math.random() * maxY + 'px';
@@ -106,9 +125,11 @@
 
         function showResponse() {
             document.getElementById('responsePhoto').style.display = 'block';
+            document.getElementById('responseText').style.display = 'block';
+            document.getElementById('staticPhoto').style.opacity = '0';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
-            document.getElementById('question').innerHTML = "Yay! 💝<br>See you on Feb 14!";
+            document.getElementById('question').style.display = 'none';
         }
 
         // Initialize No button position
