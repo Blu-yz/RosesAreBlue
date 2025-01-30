@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valentine's Surprise</title>
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        /* Permanent bottom-right photo */
+        .static-photo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+        }
+
+        /* Hidden photo that appears on Yes */
+        .response-photo {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            border: 3px solid #ff1493;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            z-index: 2; /* Ensures it appears above the static photo */
+        }
+
+        #question {
+            text-align: center;
+            font-size: 2em;
+            color: #ff1493;
+            margin-bottom: 30px;
+        }
+
+        #buttons {
+            text-align: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #32cd32;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #ff4444;
+            color: white;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="question">Will you be my valentine?</div>
+        <div id="buttons">
+            <button id="yesBtn" onclick="showResponse()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <!-- Permanent photo (always visible) -->
+    <img class="static-photo" src="REPLACE_WITH_BACKGROUND_IMAGE_URL" alt="Decorative Photo">
+    
+    <!-- Hidden response photo -->
+    <img class="response-photo" id="responsePhoto" src="REPLACE_WITH_RESPONSE_IMAGE_URL" alt="Celebration Photo">
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
+        }
+
+        function showResponse() {
+            document.getElementById('responsePhoto').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').style.display = 'none';
+            document.getElementById('question').innerHTML = "Yay! 💝<br>Look at the bottom right!";
+        }
+
+        // Initialize No button position
+        moveButton();
+    </script>
+</body>
+</html>
