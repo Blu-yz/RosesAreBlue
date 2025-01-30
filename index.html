@@ -14,7 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden; /* Prevents scrolling */
         }
 
         /* Background photo */
@@ -83,21 +83,6 @@
             position: relative; /* Initially beside Yes button */
         }
 
-        /* Container for limiting No button movement */
-        .container {
-            width: 45vw; /* 75% of screen width */
-            height: 30vh; /* 60% of screen height */
-            position: absolute;
-            left: 30%;
-            top: 30%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-
         /* Response text */
         #responseText {
             display: none;
@@ -134,18 +119,18 @@
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const container = document.querySelector('.container');
-            const containerRect = container.getBoundingClientRect();
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
 
-            // Set boundaries inside 75% width and 60% height of the middle screen
-            const minX = containerRect.left + 10;
-            const maxX = containerRect.right - noBtn.offsetWidth - 10;
-            const minY = containerRect.top + 10;
-            const maxY = containerRect.bottom - noBtn.offsetHeight - 10;
+            // Set movement limits (75% width, 60% height, keeping it visible)
+            const maxX = screenWidth * 0.75 - noBtn.offsetWidth;
+            const maxY = screenHeight * 0.60 - noBtn.offsetHeight;
+            const minX = screenWidth * 0.125; // Centering inside the viewport
+            const minY = screenHeight * 0.20; // Keeping it inside middle area
 
             // Generate new random position within defined boundaries
-            const randomX = Math.random() * (maxX - minX) + minX;
-            const randomY = Math.random() * (maxY - minY) + minY;
+            const randomX = Math.random() * maxX + minX;
+            const randomY = Math.random() * maxY + minY;
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
@@ -162,4 +147,3 @@
     </script>
 </body>
 </html>
-
