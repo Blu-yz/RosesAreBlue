@@ -14,7 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Prevents scrolling */
         }
 
         /* Background photo */
@@ -127,14 +127,21 @@
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight * 0.75; // Limit to 3/4 of the screen
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
 
-            const maxX = screenWidth - noBtn.offsetWidth - 20;
-            const maxY = screenHeight - noBtn.offsetHeight - 20;
+            // Calculate the maximum X and Y within the visible 3/4 screen
+            const minX = containerRect.left + 10;
+            const maxX = containerRect.right - noBtn.offsetWidth - 10;
+            const minY = containerRect.top + 10;
+            const maxY = containerRect.bottom - noBtn.offsetHeight - 10;
 
-            noBtn.style.left = Math.random() * maxX + 'px';
-            noBtn.style.top = Math.random() * maxY + 'px';
+            // Ensure "No" button stays within the visible 3/4 area
+            const randomX = Math.max(minX, Math.min(maxX, Math.random() * (maxX - minX)));
+            const randomY = Math.max(minY, Math.min(maxY, Math.random() * (maxY - minY)));
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
         function showResponse() {
