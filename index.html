@@ -9,12 +9,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 75vh; /* 3/4 of the screen height */
-            width: 90vw;  /* 3/4 of the screen width */
+            height: 75vh; /* Full screen */
+            width: 75vw;
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
-            overflow: hidden; /* Prevents scrolling */
+            overflow: hidden; /* Prevent scrolling */
         }
 
         /* Background photo */
@@ -63,7 +63,6 @@
             gap: 15px;
             position: relative;
             z-index: 1;
-            width: 100%;
         }
 
         button {
@@ -84,14 +83,19 @@
             position: relative; /* Initially beside Yes button */
         }
 
-        /* Container to limit the movement */
+        /* Container for limiting No button movement */
         .container {
-            width: 75vw; /* 3/4 of the screen width */
-            height: 60vh; /* 3/4 of the screen height */
-            margin: auto;
-            position: relative;
+            width: 75vw; /* 75% of screen width */
+            height: 60vh; /* 60% of screen height */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             z-index: 1;
-            overflow: hidden;
         }
 
         /* Response text */
@@ -103,7 +107,7 @@
             font-weight: bold;
             position: fixed;
             left: 50%;
-            top: 35%;
+            top: 30%;
             transform: translateX(-50%);
             z-index: 3;
         }
@@ -133,12 +137,15 @@
             const container = document.querySelector('.container');
             const containerRect = container.getBoundingClientRect();
 
-            // Ensure "No" button stays inside the 3/4 screen width & height
-            const maxX = containerRect.width - noBtn.offsetWidth - 10;
-            const maxY = containerRect.height - noBtn.offsetHeight - 10;
+            // Set boundaries inside 75% width and 60% height of the middle screen
+            const minX = containerRect.left + 10;
+            const maxX = containerRect.right - noBtn.offsetWidth - 10;
+            const minY = containerRect.top + 10;
+            const maxY = containerRect.bottom - noBtn.offsetHeight - 10;
 
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
+            // Generate new random position within defined boundaries
+            const randomX = Math.random() * (maxX - minX) + minX;
+            const randomY = Math.random() * (maxY - minY) + minY;
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
