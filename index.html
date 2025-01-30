@@ -73,11 +73,14 @@
         }
 
         #yesBtn {
-            position: relative;
+            background-color: #ff69b4;
+            color: white;
         }
 
         #noBtn {
-            position: fixed; /* Changed to fixed */
+            background-color: #ff1493;
+            color: white;
+            position: relative; /* Changed to relative */
         }
 
         #responseText {
@@ -112,8 +115,8 @@
             const noBtn = document.getElementById('noBtn');
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            
-            // Calculate max positions to keep button fully visible
+
+            // Calculate max positions to keep the button fully visible
             const maxX = screenWidth - noBtn.offsetWidth;
             const maxY = screenHeight - noBtn.offsetHeight;
 
@@ -121,6 +124,7 @@
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
 
+            noBtn.style.position = 'fixed'; // Change to fixed positioning
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
