@@ -80,7 +80,7 @@
         #noBtn {
             background-color: #00CDFE;
             color: white;
-            position: relative; /* Changed to relative */
+            position: relative; /* initially relative */
         }
 
         #responseText {
@@ -113,18 +113,32 @@
     <script>
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
+
+            // Check if a placeholder has already been added.
+            if (!noBtn.placeholder) {
+                // Create a placeholder element with the same dimensions.
+                const placeholder = document.createElement('div');
+                placeholder.style.width = noBtn.offsetWidth + 'px';
+                placeholder.style.height = noBtn.offsetHeight + 'px';
+                // Insert the placeholder before the noBtn in its parent container.
+                noBtn.parentNode.insertBefore(placeholder, noBtn);
+                // Store a reference on the button so we don’t add multiple placeholders.
+                noBtn.placeholder = placeholder;
+            }
+
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
 
-            // Calculate max positions to keep the button fully visible
+            // Calculate max positions to keep the button fully visible.
             const maxX = screenWidth - noBtn.offsetWidth;
             const maxY = screenHeight - noBtn.offsetHeight;
 
-            // Generate random positions within screen limits
+            // Generate random positions within screen limits.
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
 
-            noBtn.style.position = 'fixed'; // Change to fixed positioning
+            // Change to fixed positioning and set the random position.
+            noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
@@ -140,3 +154,4 @@
     </script>
 </body>
 </html>
+
